@@ -1,6 +1,6 @@
 
 class AirbnbLocators:
-    # Base URL
+    # URL
     AIRBNB_URL = "https://www.airbnb.com/"
 
     # Cards Options

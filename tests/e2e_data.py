@@ -2,7 +2,7 @@ import re
 from datetime import datetime, timedelta
 import random
 
-def generate_random_checkin_checkout(min_days_ahead=5, max_days_ahead=31, min_stay=1, max_stay=10):
+def generate_random_checkin_checkout(min_days_ahead=2, max_days_ahead=4, min_stay=1, max_stay=5):
     checkin = datetime.today() + timedelta(days=random.randint(min_days_ahead, max_days_ahead))
     checkout = checkin + timedelta(days=random.randint(min_stay, max_stay))
     return checkin, checkout
@@ -20,11 +20,12 @@ checkin_date, checkout_date = generate_random_checkin_checkout()
 e2e_test_data = [
     {
         "case": "E2E Test Tel-Aviv reservation 2 adults and child",
-        "location": "Tel-Aviv-Yafo",
+        "location": "Tel-Aviv",
         "checkin": checkin_date.strftime("%Y-%m-%d"),
         "checkout": checkout_date.strftime("%Y-%m-%d"),
         "expected_dates": format_date_range(checkin_date, checkout_date),
         "expected_guest": '3 guests',
+        "expected_reservation_guests": "2 adults, 1 child",
         "who":  {
             "adults": 2,
             "children": 1

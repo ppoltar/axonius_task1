@@ -77,8 +77,8 @@ class AirbnbMainPage(BasePage):
                 popup.wait_for(state="visible")
                 popup.click()
                 logger.info("Popup appeared and was clicked.")
-            except TimeoutError:
-                logger.error("Popup did not appear, proceeding to the next step.")
+            except Exception as e:
+                logger.error(f"Popup did not appear, proceeding to the next step. : {e}")
 
             return popup_page
 

@@ -2,6 +2,7 @@ import json
 import logging
 import allure
 from locators.basepage_locators import BasePageLocators
+from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
@@ -49,25 +50,25 @@ class BasePage:
     def guests_button(self):
         return self.page.locator(BasePageLocators.AIRBNB_MAIN_SEARCH_GUESTS_BUTTON)
 
-    def save_analysis_results(self, place_options_list: list[dict]):
+    def save_attach_results(self, options_list: list[dict], filename: str):
         """
-        Save analyzed results to a JSON file and attach it to Allure report.
         """
-        logger.info("Saving analyzed results to JSON file and attaching to Allure report.")
-        place_options_list_without_locator = [{k: v for k, v in item.items() if k != 'locator'} for item in place_options_list]
+        logger.info("Saving results to JSON file and attaching to Allure report.")
+        options_list_without_locator = [{k: v for k, v in item.items() if k != 'locator'} for item in options_list]
+        path = Path("reports") / filename
 
         try:
-            with self.analysis_file.open("w", encoding="utf-8") as f:
-                json.dump(place_options_list_without_locator, f, indent=2)
-            logger.debug(f"Results written to {self.analysis_file}")
+            with path.open("w", encoding="utf-8") as f:
+                json.dump(options_list_without_locator, f, indent=2)
+            logger.info(f"Results written to {path}")
 
-            with self.analysis_file.open("r", encoding="utf-8") as f:
+            with path.open("r", encoding="utf-8") as f:
                 allure.attach(
                     f.read(),
-                    name="Analyze Results",
+                    name=filename,
                     attachment_type=allure.attachment_type.JSON
                 )
-            logger.info("Analyze results successfully attached to Allure.")
+            logger.info("Results successfully attached to Allure.")
 
         except Exception as e:
             logger.error(f"Failed to save or attach analysis results: {e}")

@@ -36,15 +36,35 @@ def test_e2e(page, test_data):
 
     logger.info(f'Find places sorted option by rating and price')
     airbnb_page.place_options_results_sorted_by_rating_price()
-    airbnb_page.save_analysis_results(airbnb_page.place_options)
+    airbnb_page.save_attach_results(airbnb_page.place_options, filename="Analyze_Results.json")
     airbnb_page_tab = airbnb_page.choose_most_rating_and_cheapest_option()
 
-    chepest_optios = airbnb_page.most_rating_and_cheapest_option()
     room_page = RoomPage(airbnb_page_tab)
     room_page.click_reserve_button()
 
-    room_page.attempt_reservation()
+    room_page.reservation_details()
+    room_page.save_attach_results(room_page.reservation_details_list, filename="Reservation.json")
+
+    if not room_page.reservation_details_list[0]['name'] == airbnb_page.place_options[0]["name"]:
+        raise Exception(f"The name of the apartment different: "
+                        f"{room_page.reservation_details_list[0]['name']} != {airbnb_page.place_options[0]['name']}")
+
+    if not int(room_page.reservation_details_list[0]["price"]) == int(airbnb_page.place_options[0]["price"]):
+        raise Exception(f"The price of the apartment different: "
+                        f"{int(room_page.reservation_details_list[0]['price'])} != {int(airbnb_page.place_options[0]['price'])}")
+
+    if not room_page.reservation_details_list[0]["rating"] == airbnb_page.place_options[0]["rating"]:
+        raise Exception(f"The rating of the apartment different: "
+                        f"{room_page.reservation_details_list[0]['rating']} != {airbnb_page.place_options[0]['rating']}")
+
+    if not room_page.reservation_details_list[0]["guest"] == test_data["expected_reservation_guests"]:
+        raise Exception(f"The guest of the apartment different: "
+                        f"{test_data['expected_reservation_guests']} != {room_page.reservation_details_list[0]['guest']}")
+
+    if not room_page.reservation_details_list[0]["date"].split() == test_data["expected_dates"].split():
+        raise Exception(f"The date of the apartment different: "
+                        f"{test_data['expected_dates']} != {room_page.reservation_details_list[0]['date']}")
 
 
-    pass
+
 
