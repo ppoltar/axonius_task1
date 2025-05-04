@@ -1,10 +1,10 @@
 import allure
 import pytest
 import logging
-import json
-from pathlib import Path
+
+from pages.room_page import RoomPage
 from tests.e2e_data import e2e_test_data
-from pages.airbnb_page import AirbnbPage
+from pages.airbnb_main_page import AirbnbMainPage
 from playwright.sync_api import expect
 
 logger = logging.getLogger(__name__)
@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 @pytest.mark.parametrize("test_data", e2e_test_data, ids=[data["case"] for data in e2e_test_data])
 def test_e2e(page, test_data):
     logger.info(f"Starting test: {test_data['case']}.")
-    airbnb_page = AirbnbPage(page)
-    airbnb_page.go_to_airbnb_page()
+    airbnb_page = AirbnbMainPage(page)
+    airbnb_page.go_to_airbnb_main_page()
 
     logger.info(f"Choosing location, dates and guest.")
     airbnb_page.choose_where_in_search_bar(test_data['location'])
@@ -34,17 +34,17 @@ def test_e2e(page, test_data):
     expect(airbnb_page.date_button()).to_have_text(test_data['expected_dates'])
     expect(airbnb_page.guests_button()).to_have_text(test_data['expected_guest'])
 
-    logger.info(f'Find this sorted option by rating and price')
-    options = airbnb_page.options_results_sorted_by_rating_price()
-    options_list_without_locator = [{k: v for k, v in item.items() if k != 'locator'} for item in options]
+    logger.info(f'Find places sorted option by rating and price')
+    airbnb_page.place_options_results_sorted_by_rating_price()
+    airbnb_page.save_analysis_results(airbnb_page.place_options)
+    airbnb_page_tab = airbnb_page.choose_most_rating_and_cheapest_option()
 
-    logger.info(f'Saving the analyze results to file and attached to allure report')
-    output_path = Path("reports") / "analyze_results.json"
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(options_list_without_locator, f, indent=2)
+    chepest_optios = airbnb_page.most_rating_and_cheapest_option()
+    room_page = RoomPage(airbnb_page_tab)
+    room_page.click_reserve_button()
 
-    with open(output_path, "r", encoding="utf-8") as f:
-        allure.attach(f.read(), name="Analyze Results", attachment_type=allure.attachment_type.JSON)
+    room_page.attempt_reservation()
+
 
     pass
 
