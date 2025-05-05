@@ -1,27 +1,12 @@
-# Use an official Python runtime as a parent image
-FROM python:3.11-slim
+# Use an official Python runtime (non-slim version)
+FROM python:3.11
 
 # Install system dependencies for Playwright, Allure, and OpenJDK 11
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     git \
-    openjdk-11-jdk \
-    libnss3 \
-    libatk1.0-0 \
-    libcups2 \
-    libx11-xcb1 \
-    libdbus-1-3 \
-    libgdk-pixbuf2.0-0 \
-    libnspr4 \
-    libxss1 \
-    libasound2 \
-    libx11-6 \
-    fonts-liberation \
-    libappindicator3-1 \
-    libxtst6 \
-    xdg-utils \
-    && apt-get clean  # Clean up after installation
+    openjdk-11-jdk  # Install OpenJDK 11
 
 # Set JAVA_HOME and update PATH for OpenJDK 11
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
