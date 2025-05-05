@@ -1,8 +1,5 @@
 FROM python:3.11-bullseye
 
-# Set the IS_DOCKER environment variable to "true"
-ENV IS_DOCKER=true
-
 # Install required system dependencies for Playwright, Allure, and OpenJDK 11
 RUN apt-get update && apt-get install -y \
     curl \

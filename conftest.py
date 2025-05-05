@@ -14,7 +14,8 @@ ALLURE_REPORT_DIR = f"{REPORTS_DIR}/allure-report"
 VIDEO_DIR = f"{REPORTS_DIR}/videos"
 SCREENSHOT_DIR = f"{REPORTS_DIR}/screenshots"
 TRACE_DIR = f"{REPORTS_DIR}/playwright-traces"
-USER_DATA_DIR = "./airbnb_user_data"
+USER_DATA_DIR = f"{REPORTS_DIR}/airbnb_user_data"
+
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_reports():
@@ -41,8 +42,9 @@ def cleanup_reports():
     os.makedirs(ALLURE_REPORT_DIR, exist_ok=True)
     os.makedirs(VIDEO_DIR, exist_ok=True)
     os.makedirs(SCREENSHOT_DIR, exist_ok=True)
+    os.makedirs(USER_DATA_DIR, exist_ok=True)
     logger.info(
-        f"Directories {REPORTS_DIR}, {ALLURE_RESULTS_DIR}, {ALLURE_REPORT_DIR}, {VIDEO_DIR}, and {SCREENSHOT_DIR} are ready.")
+        f"Directories {REPORTS_DIR}, {ALLURE_RESULTS_DIR}, {ALLURE_REPORT_DIR}, {VIDEO_DIR}, {USER_DATA_DIR}, and {SCREENSHOT_DIR} are ready.")
 
 @pytest.fixture(scope="function")
 def page(request):
