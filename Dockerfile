@@ -14,7 +14,7 @@ RUN apt-get update && \
     unzip -t allure.zip && \
     unzip -o allure.zip -d /opt/ && \
     ls -la /opt && \
-    mv /opt/allure-commandline-2.27.0 /opt/allure && \
+    mv /opt/allure-2.27.0 /opt/allure && \
     ln -s /opt/allure/bin/allure /usr/local/bin/allure && \
     rm allure.zip
 
