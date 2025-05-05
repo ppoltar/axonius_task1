@@ -48,7 +48,7 @@ def test_e2e(page, test_data):
     airbnb_page = AirbnbMainPage(page)
     airbnb_page.go_to_airbnb_main_page()
 
-    logger.info("Part-1  Choosing location, dates and guest.")
+    logger.info("Part-1 Choosing location, dates and guest.")
     airbnb_page.choose_where_in_search_bar(test_data['location'])
     airbnb_page.choose_checkin_checkout_date(test_data['checkin'], test_data['checkout'])
     airbnb_page.choose_who_in_search_bar(test_data['who'])
