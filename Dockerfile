@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
     openjdk-11-jdk  # Install OpenJDK, required for Allure to work properly
 
 # Set JAVA_HOME and update PATH
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64  # Set the Java home path for JDK 11
-ENV PATH=$JAVA_HOME/bin:$PATH  # Add Java to the system PATH
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
 
 # Set the working directory inside the container
 WORKDIR /app
