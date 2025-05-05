@@ -1,5 +1,4 @@
-# Use an official Python runtime (non-slim version)
-FROM python:3.11
+FROM python:3.11-bullseye
 
 # Install required system dependencies for Playwright, Allure, and OpenJDK 11
 RUN apt-get update && apt-get install -y \
