@@ -18,7 +18,7 @@ RUN apt-get update && \
     ln -s /opt/allure/bin/allure /usr/local/bin/allure && \
     rm allure.zip && \
     pip install --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt && \
     # Install Playwright browsers
     python -m playwright install
 
