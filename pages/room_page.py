@@ -6,14 +6,42 @@ from playwright.sync_api import Page
 from locators.rooms_locators import RoomsLocators
 
 class RoomPage(BasePage):
+    """
+    Page object representing the Room Details page of an Airbnb listing.
+    Provides functionality to reserve the room and extract reservation summary details.
+    """
     def __init__(self, page: Page):
+        """
+        Initializes the RoomPage object.
+
+        Args:
+            page (Page): The Playwright page instance for interacting with the browser context.
+        """
         super().__init__(page)
         self.reservation_details_list = None
 
     def click_reserve_button(self):
+        """
+        Clicks the second 'Reserve' button on the room details page.
+        """
         self.page.locator(RoomsLocators.RESERVE_BUTTON).nth(1).click()
 
     def reservation_details(self):
+        """
+                Extracts and parses reservation information from the confirmation section.
+
+                The following details are collected:
+                    - name: Name or title of the listing.
+                    - price: Total reservation price.
+                    - rating: Guest rating of the listing.
+                    - date: Reservation date range.
+                    - guest: Guest details (e.g., number of adults/children).
+
+                This data is stored in the `self.reservation_details_list` attribute.
+
+                Raises:
+                    ValueError: If parsing of any required field fails.
+                """
         details_list = []
         section_text = self.page.locator(RoomsLocators.CONFIRM_PAY_DETAILS).text_content()
         logging.info(f'Reservation Text are:\n{section_text}')
