@@ -60,6 +60,8 @@ def page(request):
      Yields:
      - page (playwright.page.Page): The Playwright page object that the test can interact with.
      """
+
+    is_docker = os.environ.get("IS_DOCKER", "false") == "true"
     test_name = request.node.name
     screenshot_path = f"{SCREENSHOT_DIR}/{test_name}.png"
     trace_path = f"{TRACE_DIR}/{test_name}-trace.zip"
@@ -68,7 +70,7 @@ def page(request):
         logger.info("Launching browser...")
         context = p.chromium.launch_persistent_context(
             user_data_dir=USER_DATA_DIR,
-            headless=False,
+            headless=is_docker,
             record_video_dir=f"{VIDEO_DIR}/{test_name}",
         )
         if context.pages: context.pages[0].close()
