@@ -1,8 +1,14 @@
-install:
-	python3 -m venv venv && \
-	source venv/bin/activate && \
-	pip install --upgrade pip && \
-	pip install -r requirements.txt
+# Makefile
 
+.PHONY: build test install
+
+# Build the Docker image
+build:
+	docker build -t my-test-container .
+
+# Run tests inside the container
 test:
-	venv/bin/pytest --suite-timeout=900
+	docker run --rm -v $(PWD)/reports:/app/reports my-test-container
+
+# Install dependencies, build the container, and run tests
+install: build test
