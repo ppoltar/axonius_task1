@@ -7,12 +7,18 @@ WORKDIR /app
 # Copy the files into the container
 COPY . /app/
 
-# Install system and Python dependencies including Allure CLI
+# Install system dependencies including curl, unzip, and git
 RUN apt-get update && \
     apt-get install -y curl unzip git && \
+    # Download Allure CLI zip file
     curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.0.zip && \
+    # Verify the integrity of the download (optional but recommended)
     unzip allure.zip -d /opt/ && \
+    # Create a symlink to make Allure accessible from anywhere
     ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure && \
+    # Clean up
+    rm allure.zip && \
+    # Upgrade pip and install project dependencies
     pip install --upgrade pip && \
     pip install -r requirements.txt
 
