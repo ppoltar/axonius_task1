@@ -33,6 +33,11 @@ Before running the tests, ensure you have the following prerequisites installed:
    ```bash
    pytest --suite-timeout 900
    ```
+   
+*** Run with Docker (after step 1):
+   ```bash
+   make install
+   ```
 --- 
 ### Project Structure
 
