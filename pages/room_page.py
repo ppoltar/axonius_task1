@@ -18,7 +18,7 @@ class RoomPage(BasePage):
         name = section_text.split("Rating ")[0]
         rating = float(section_text.split("Rating ")[1].split(" out")[0])
         date = section_text.split("Trip details")[1].split(',')[0].replace("\u2009", " ").replace("\u2013", "–")
-        guest = re.search(r'\w+\s\d{1,2}\s*–\s*\d{1,2},\s*\d{4}\s*([^:]+?)Change', section_text, re.IGNORECASE).group(1).strip()
+        guest = re.search(r'\d{4}\s*(.*)', section_text.split("detailsMay")[1].split("Change")[0]).group(1).strip()
         price = float(re.search(r'Total[^0-9]*([\d.,]+)', section_text).group(1).replace(',', ''))
 
         details_list.append({

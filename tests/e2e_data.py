@@ -19,7 +19,7 @@ checkin_date, checkout_date = generate_random_checkin_checkout()
 
 e2e_test_data = [
     {
-        "case": "E2E Test Tel-Aviv reservation 2 adults and child",
+        "case": "E2E Test Tel-Aviv reservation 2 adults and 1 child",
         "location": "Tel-Aviv",
         "checkin": checkin_date.strftime("%Y-%m-%d"),
         "checkout": checkout_date.strftime("%Y-%m-%d"),
