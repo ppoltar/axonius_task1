@@ -44,7 +44,7 @@ def test_e2e(page, test_data):
       Raises:
         Exception: If any validation step fails (e.g., mismatch in property name, price, or guest details).
     """
-    logger.info("Starting test: {test_data['case']}.")
+    logger.info(f"Starting test: {test_data['case']}.")
     airbnb_page = AirbnbMainPage(page)
     airbnb_page.go_to_airbnb_main_page()
 
