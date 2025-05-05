@@ -14,15 +14,13 @@ class BasePageLocators:
     AIRBNB_DATE_BUTTON_BY_DATE = 'button[data-state--date-string="{}"]'
     AIRBNB_MAIN_SEARCH_CHECKIN_DATE = '[data-testid="structured-search-input-field-split-dates-0"]'
 
-
-    # Guest steppers
+    # Guest options list
     GUESTS_ADULTS_INCREASE = "[data-testid='stepper-adults-increase-button']"
     GUESTS_CHILDREN_INCREASE = "[data-testid='stepper-children-increase-button']"
     GUESTS_INFANTS_INCREASE = "[data-testid='stepper-infants-increase-button']"
     GUESTS_PETS_INCREASE = "[data-testid='stepper-pets-increase-button']"
 
-
-    # Dynamic guest mapping for programmatic selection
+    # Guest mapping
     GUEST_TYPE_INCREASE_SELECTORS = {
         "adults": GUESTS_ADULTS_INCREASE,
         "children": GUESTS_CHILDREN_INCREASE,

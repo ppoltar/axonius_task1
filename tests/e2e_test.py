@@ -10,11 +10,40 @@ from playwright.sync_api import expect
 logger = logging.getLogger(__name__)
 
 @allure.description("""
+This test verifies the end-to-end flow of searching for a location, selecting dates and guests, 
+    applying filters, validating the search parameters, and confirming the reservation details on Airbnb.
+
+    Test Steps:
+    1. Navigate to the Airbnb main page.
+    2. Choose a location, check-in/check-out dates, and number of guests in the search bar.
+    3. Apply filters to search results (such as selecting 'Entire Home' and 'Instant Book').
+    4. Validate the URL contains the expected search parameters (location, dates, guests).
+    5. Validate the UI displays the correct search parameters.
+    6. Sort search results by rating and price.
+    7. Select the most highly-rated and cheapest option.
+    8. Go to the room page and reserve the selected apartment.
+    9. Validate reservation details such as name, price, rating, guest count, and reservation date.
+
+    Expected Results:
+    - The search parameters should reflect the location, dates, and guests.
+    - The filters should correctly narrow the search to relevant results.
+    - The reservation details on the room page should match the selected property and the search parameters.
 """)
 
 @pytest.mark.e2e
 @pytest.mark.parametrize("test_data", e2e_test_data, ids=[data["case"] for data in e2e_test_data])
 def test_e2e(page, test_data):
+    """
+    End-to-End test for the Airbnb reservation flow. This simulates a user flow for searching properties,
+    applying filters, and reserving a property while validating the correctness of the results.
+
+    Args:
+        page (Page): The Playwright page object.
+        test_data (dict): A dictionary containing test case parameters, such as location, check-in,
+                          check-out dates, expected reservation details, etc.
+      Raises:
+        Exception: If any validation step fails (e.g., mismatch in property name, price, or guest details).
+    """
     logger.info("Starting test: {test_data['case']}.")
     airbnb_page = AirbnbMainPage(page)
     airbnb_page.go_to_airbnb_main_page()
@@ -79,7 +108,6 @@ def test_e2e(page, test_data):
     if not room_page.reservation_details_list[0]["date"].split() == test_data["expected_dates"].split():
         raise Exception(f"The date of the apartment reservation are different: "
                         f"{test_data['expected_dates']} != {room_page.reservation_details_list[0]['date']}")
-
     logger.info("Finish Part-8. Good Job")
 
 

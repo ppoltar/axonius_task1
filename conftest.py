@@ -23,14 +23,6 @@ def cleanup_reports():
     This fixture will delete the existing reports directory before running any tests and
     recreate it with necessary subdirectories.
     It is automatically invoked at the start of the test session.
-
-    The directories that will be created are:
-        - reports/
-        - reports/allure-results/
-        - reports/allure-report/
-        - reports/videos/
-        - reports/screenshots/
-        - reports/traces/
     """
     if os.path.exists(REPORTS_DIR):
         logging.info(f"Deleting existing {REPORTS_DIR} directory...")

@@ -28,7 +28,6 @@ COPY requirements.txt /app/
 # Install Python dependencies and Playwright dependencies
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
-    # Install Playwright and its required dependencies
     python -m playwright install-deps && \
     python -m playwright install
 
