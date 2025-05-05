@@ -1,3 +1,4 @@
+import logging
 import re
 
 from pages.base_page import BasePage
@@ -15,6 +16,7 @@ class RoomPage(BasePage):
     def reservation_details(self):
         details_list = []
         section_text = self.page.locator(RoomsLocators.CONFIRM_PAY_DETAILS).text_content()
+        logging.info(f'Reservation Text are:\n{section_text}')
         name = section_text.split("Rating ")[0]
         rating = float(section_text.split("Rating ")[1].split(" out")[0])
         date = section_text.split("Trip details")[1].split(',')[0].replace("\u2009", " ").replace("\u2013", "–")
@@ -29,4 +31,5 @@ class RoomPage(BasePage):
             'guest': guest
         })
 
+        logging.info(f'The reservation details list are:\n{details_list}')
         self.reservation_details_list =  details_list

@@ -15,41 +15,51 @@ logger = logging.getLogger(__name__)
 @pytest.mark.e2e
 @pytest.mark.parametrize("test_data", e2e_test_data, ids=[data["case"] for data in e2e_test_data])
 def test_e2e(page, test_data):
-    logger.info(f"Starting test: {test_data['case']}.")
+    logger.info("Starting test: {test_data['case']}.")
     airbnb_page = AirbnbMainPage(page)
     airbnb_page.go_to_airbnb_main_page()
 
-    logger.info(f"Choosing location, dates and guest.")
+    logger.info("Part-1  Choosing location, dates and guest.")
     airbnb_page.choose_where_in_search_bar(test_data['location'])
     airbnb_page.choose_checkin_checkout_date(test_data['checkin'], test_data['checkout'])
     airbnb_page.choose_who_in_search_bar(test_data['who'])
     airbnb_page.click_search_button_in_search_bar()
+    logger.info("Finish Part-1. Good Job")
 
+    logger.info("Part-2 Filters by entire place and instant book.")
     airbnb_page.click_on_filter()
     airbnb_page.click_filter_entire_home()
     airbnb_page.click_instant_book()
     airbnb_page.click_filter_show_footer()
+    logger.info("Finish Part-2. Good Job")
 
-
-    logger.info(f"Validate search params by url.")
+    logger.info("Part-3 Validate search params by url.")
     expect(airbnb_page.page).to_have_url(test_data["expected_url"])
+    logger.info("Finish Part-3. Good Job")
 
-    logger.info(f"Validate search params by ui.")
+    logger.info("Part-4 Validate search params by ui.")
     expect(airbnb_page.location_button()).to_have_text(test_data['location'])
     expect(airbnb_page.date_button()).to_have_text(test_data['expected_dates'])
     expect(airbnb_page.guests_button()).to_have_text(test_data['expected_guest'])
+    logger.info("Finish Part-4. Good Job")
 
-    logger.info(f'Find places sorted option by rating and price')
+    logger.info('Part-5 Find places sorted option by rating and price')
     airbnb_page.place_options_results_sorted_by_rating_price(test_data["checkin_checkout_query"])
     airbnb_page.save_attach_results(airbnb_page.place_options, filename="Analyze_Results.json")
     airbnb_page_tab = airbnb_page.choose_most_rating_and_cheapest_option()
+    logger.info("Finish Part-5. Good Job")
 
+    logger.info('Part-6 Find places sorted option by rating and price')
     room_page = RoomPage(airbnb_page_tab)
     room_page.click_reserve_button()
+    logger.info("Finish Part-6. Good Job")
 
+    logger.info('Part-7 Collect reservation and save the results')
     room_page.reservation_details()
     room_page.save_attach_results(room_page.reservation_details_list, filename="Reservation.json")
+    logger.info("Finish Part-7. Good Job")
 
+    logger.info('Part-8 Validate reservation')
     if not room_page.reservation_details_list[0]['name'] == airbnb_page.place_options[0]["name"]:
         raise Exception(f"The name of the apartment different: "
                         f"{room_page.reservation_details_list[0]['name']} != {airbnb_page.place_options[0]['name']}")
@@ -70,6 +80,6 @@ def test_e2e(page, test_data):
         raise Exception(f"The date of the apartment reservation are different: "
                         f"{test_data['expected_dates']} != {room_page.reservation_details_list[0]['date']}")
 
-
+    logger.info("Finish Part-8. Good Job")
 
 
