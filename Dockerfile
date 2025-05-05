@@ -6,10 +6,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     git \
-    software-properties-common && \
-    add-apt-repository ppa:openjdk-r/ppa && \
-    apt-get update && \
-    apt-get install -y openjdk-11-jdk  # Install OpenJDK, required for Allure to work properly
+    openjdk-11-jdk  # Install OpenJDK 11 from Debian repositories
 
 # Set JAVA_HOME and update PATH
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
