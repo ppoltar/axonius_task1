@@ -25,6 +25,11 @@ def test_e2e(page, test_data):
     airbnb_page.choose_who_in_search_bar(test_data['who'])
     airbnb_page.click_search_button_in_search_bar()
 
+    airbnb_page.click_on_filter()
+    airbnb_page.click_instant_book()
+    airbnb_page.click_filter_show_footer()
+
+
 
     logger.info(f"Validate search params by url.")
     expect(airbnb_page.page).to_have_url(test_data["expected_url"])
@@ -49,9 +54,9 @@ def test_e2e(page, test_data):
         raise Exception(f"The name of the apartment different: "
                         f"{room_page.reservation_details_list[0]['name']} != {airbnb_page.place_options[0]['name']}")
 
-    if not int(room_page.reservation_details_list[0]["price"]) == int(airbnb_page.place_options[0]["price"]):
+    if not round(room_page.reservation_details_list[0]["price"], 0) == round(airbnb_page.place_options[0]["price"], 0):
         raise Exception(f"The price of the apartment different: "
-                        f"{int(room_page.reservation_details_list[0]['price'])} != {int(airbnb_page.place_options[0]['price'])}")
+                        f"{round(room_page.reservation_details_list[0]['price'], 0)} != {round(airbnb_page.place_options[0]['price'], 0)}")
 
     if not room_page.reservation_details_list[0]["rating"] == airbnb_page.place_options[0]["rating"]:
         raise Exception(f"The rating of the apartment different: "

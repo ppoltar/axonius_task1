@@ -24,8 +24,8 @@ class AirbnbMainPage(BasePage):
             logger.error(error_message)
             raise Exception(f"Page navigation failed: {error_message}")
 
-
     def place_options_results_sorted_by_rating_price(self):
+        self.page.locator(AirbnbLocators.CARD_CONTAINERrt).wait_for(state="visible")
         options =  self.page.locator(AirbnbLocators.CARD_CONTAINER).all()
 
         options_list = []
@@ -84,4 +84,15 @@ class AirbnbMainPage(BasePage):
 
         except Exception as e:
             logger.error(f"Failed choose place option: {e}")
+
+
+    def click_on_filter(self):
+        self.page.locator(AirbnbLocators.AIRBNB_MAIN_FILTER_BUTTON).click()
+
+    def click_instant_book(self):
+        self.page.locator(AirbnbLocators.FILTER_INSTANT_BOOK).click()
+
+    def click_filter_show_footer(self):
+        self.page.locator(AirbnbLocators.FILTER_SHOW_FOOTER).click()
+
 

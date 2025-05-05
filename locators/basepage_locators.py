@@ -14,6 +14,7 @@ class BasePageLocators:
     AIRBNB_DATE_BUTTON_BY_DATE = 'button[data-state--date-string="{}"]'
     AIRBNB_MAIN_SEARCH_CHECKIN_DATE = '[data-testid="structured-search-input-field-split-dates-0"]'
 
+
     # Guest steppers
     GUESTS_ADULTS_INCREASE = "[data-testid='stepper-adults-increase-button']"
     GUESTS_CHILDREN_INCREASE = "[data-testid='stepper-children-increase-button']"

@@ -1,1 +1,3 @@
 pytest-playwright == 0.7.0
+
+git@github.com:ppoltar/axonius_task2.git
