@@ -7,12 +7,13 @@ WORKDIR /app
 # Copy the files into the container
 COPY . /app/
 
-# Install system dependencies and Python dependencies
+# Install system and Python dependencies including Allure CLI
 RUN apt-get update && \
-    apt-get install -y \
-    curl \
-    git \
-    && pip install --upgrade pip && \
+    apt-get install -y curl unzip git && \
+    curl -o allure.zip -L https://github.com/allure-framework/allure2/releases/latest/download/allure-2.27.0.zip && \
+    unzip allure.zip -d /opt/ && \
+    ln -s /opt/allure-2.27.0/bin/allure /usr/bin/allure && \
+    pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Set the default command to run the tests
