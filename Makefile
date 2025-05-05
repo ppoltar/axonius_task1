@@ -5,4 +5,4 @@ install:
 	pip install -r requirements.txt
 
 test:
-	venv/bin/pytest --suite-timeout=900
+	venv/bin/pytest --suite-timeout
