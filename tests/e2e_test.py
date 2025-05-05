@@ -29,8 +29,6 @@ def test_e2e(page, test_data):
     airbnb_page.click_instant_book()
     airbnb_page.click_filter_show_footer()
 
-
-
     logger.info(f"Validate search params by url.")
     expect(airbnb_page.page).to_have_url(test_data["expected_url"])
 

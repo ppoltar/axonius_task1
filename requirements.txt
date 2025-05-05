@@ -1,3 +1,7 @@
 pytest-playwright == 0.7.0
+allure-pytest == 2.14.1
+pytest-xdist==2.5.0
+pytest-html==3.1.1
+playwright==1.51.0
 
-https://github.com/ppoltar/axonius_task2.git
+git+https://github.com/ppoltar/axonius_task2.git

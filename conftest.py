@@ -14,6 +14,7 @@ ALLURE_REPORT_DIR = f"{REPORTS_DIR}/allure-report"
 VIDEO_DIR = f"{REPORTS_DIR}/videos"
 SCREENSHOT_DIR = f"{REPORTS_DIR}/screenshots"
 TRACE_DIR = f"{REPORTS_DIR}/playwright-traces"
+USER_DATA_DIR = "./airbnb_user_data"
 
 @pytest.fixture(scope="session", autouse=True)
 def cleanup_reports():
@@ -65,8 +66,11 @@ def page(request):
 
     with sync_playwright() as p:
         logger.info("Launching browser...")
-        browser = p.chromium.launch(headless=False)
-        context = browser.new_context(record_video_dir=f'{VIDEO_DIR}/{test_name}')
+        context = p.chromium.launch_persistent_context(
+            user_data_dir=USER_DATA_DIR,
+            headless=False,
+            record_video_dir=f"{VIDEO_DIR}/{test_name}",
+        )
         context.tracing.start(screenshots=True, snapshots=True)
         page = context.new_page()
 
@@ -93,7 +97,7 @@ def page(request):
 
         logger.info(f"Test: {test_name} completed. Saving trace...")
         context.tracing.stop(path=trace_path)
-        browser.close()
+        context.close()
 
 def pytest_sessionfinish():
     """

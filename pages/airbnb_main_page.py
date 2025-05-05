@@ -25,7 +25,7 @@ class AirbnbMainPage(BasePage):
             raise Exception(f"Page navigation failed: {error_message}")
 
     def place_options_results_sorted_by_rating_price(self):
-        self.page.locator(AirbnbLocators.CARD_CONTAINERrt).wait_for(state="visible")
+        self.page.locator(AirbnbLocators.CARD_CONTAINER).nth(0).wait_for(state="visible")
         options =  self.page.locator(AirbnbLocators.CARD_CONTAINER).all()
 
         options_list = []
