@@ -7,17 +7,17 @@ WORKDIR /app
 # Copy the files into the container
 COPY . /app/
 
-# Install system dependencies including curl, unzip, and git
+# Install system dependencies
 RUN apt-get update && \
     apt-get install -y curl unzip git && \
     # Download Allure CLI from Maven Central
     curl -L https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.27.0/allure-commandline-2.27.0.zip -o allure.zip && \
-    # Unzip the Allure CLI and create symlink
+    # Unzip and rename for consistency
     unzip allure.zip -d /opt/ && \
-    ln -s /opt/allure-commandline-2.27.0/bin/allure /usr/bin/allure && \
-    # Clean up by removing the zip file
+    mv /opt/allure-commandline-2.27.0 /opt/allure && \
+    ln -s /opt/allure/bin/allure /usr/local/bin/allure && \
     rm allure.zip && \
-    # Upgrade pip and install project dependencies
+    # Upgrade pip and install Python dependencies
     pip install --upgrade pip && \
     pip install -r requirements.txt
 
