@@ -1,12 +1,20 @@
 # Use an official Python runtime (non-slim version)
 FROM python:3.11
 
-# Install system dependencies for Playwright, Allure, and OpenJDK 11
+# Install required system dependencies for Playwright, Allure, and OpenJDK 11
 RUN apt-get update && apt-get install -y \
     curl \
     unzip \
     git \
-    openjdk-11-jdk  # Install OpenJDK 11
+    wget \
+    ca-certificates \
+    software-properties-common \
+    && apt-get clean
+
+# Add OpenJDK repository and install OpenJDK 11
+RUN echo "deb http://deb.debian.org/debian/ bookworm-backports main" | tee -a /etc/apt/sources.list.d/debian-backports.list && \
+    apt-get update && \
+    apt-get install -y openjdk-11-jdk
 
 # Set JAVA_HOME and update PATH for OpenJDK 11
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
