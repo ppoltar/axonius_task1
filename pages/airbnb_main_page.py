@@ -24,12 +24,21 @@ class AirbnbMainPage(BasePage):
             logger.error(error_message)
             raise Exception(f"Page navigation failed: {error_message}")
 
-    def place_options_results_sorted_by_rating_price(self):
+    def place_options_results_sorted_by_rating_price(self, wanted_dates: str):
         self.page.locator(AirbnbLocators.CARD_CONTAINER).nth(0).wait_for(state="visible")
         options =  self.page.locator(AirbnbLocators.CARD_CONTAINER).all()
 
         options_list = []
         for option in options:
+            try:
+                link_locator = option.locator(AirbnbLocators.CARD_ROOM_URL).first
+                href_link = link_locator.get_attribute("href")
+                if not wanted_dates in href_link:
+                    continue
+            except Exception as e:
+                logger.warning(f"Error while parsing listing dates or URL: {e}")
+                continue
+
             name_locator = option.locator(AirbnbLocators.CARD_NAME)
             name = name_locator.text_content() if name_locator else "No name"
 
@@ -78,7 +87,7 @@ class AirbnbMainPage(BasePage):
                 popup.click()
                 logger.info("Popup appeared and was clicked.")
             except Exception as e:
-                logger.error(f"Popup did not appear, proceeding to the next step. : {e}")
+                logger.warning(f"Popup did not appear, proceeding to the next step. : {e}")
 
             return popup_page
 
@@ -94,5 +103,8 @@ class AirbnbMainPage(BasePage):
 
     def click_filter_show_footer(self):
         self.page.locator(AirbnbLocators.FILTER_SHOW_FOOTER).click()
+
+    def click_filter_entire_home(self):
+        self.page.locator(AirbnbLocators.FILTER_ENTIRE_HOME).click()
 
 

@@ -9,10 +9,12 @@ class AirbnbLocators:
     CARD_PRICE = "[data-testid='price-availability-row']"
     CARD_RATING_SPAN = "span"
     CARD_RATING_TEXT = "out of 5 average rating"
+    CARD_ROOM_URL ='a[href*="/rooms/"]'
 
     # Filters
     AIRBNB_MAIN_FILTER_BUTTON =  '[data-testid="category-bar-filter-button"]'
     FILTER_INSTANT_BOOK =  '[id="filter-item-ib"]'
     FILTER_SHOW_FOOTER = 'footer >> text=Show'
+    FILTER_ENTIRE_HOME ='text=Entire home'
 
 

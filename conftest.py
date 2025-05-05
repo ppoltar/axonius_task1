@@ -71,6 +71,7 @@ def page(request):
             headless=False,
             record_video_dir=f"{VIDEO_DIR}/{test_name}",
         )
+        if context.pages: context.pages[0].close()
         context.tracing.start(screenshots=True, snapshots=True)
         page = context.new_page()
 
