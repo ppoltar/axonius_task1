@@ -19,7 +19,8 @@ RUN apt-get update && \
     rm allure.zip && \
     pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
-    # Install Playwright browsers
+    # Install Playwright and its required dependencies
+    python -m playwright install-deps && \
     python -m playwright install
 
 # Copy the rest of the application files into the container
